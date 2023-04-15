@@ -23,6 +23,8 @@ models/*
 /result
 /perplexity
 /embedding
+/embeddings-benchmark
+/embeddings-server
 /benchmark-q4_0-matmult
 /Pipfile
 
@@ -38,3 +40,6 @@ __pycache__
 
 zig-out/
 zig-cache/
+
+model_creation/output
+model_creation/tmp-output

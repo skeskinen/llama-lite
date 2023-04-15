@@ -133,7 +133,7 @@ $(info I CC:       $(CCV))
 $(info I CXX:      $(CXXV))
 $(info )
 
-default: main quantize perplexity embedding
+default: main quantize perplexity embedding embeddings-benchmark embeddings-server
 
 #
 # Build library
@@ -149,7 +149,7 @@ common.o: examples/common.cpp examples/common.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -vf *.o main quantize quantize-stats perplexity embedding benchmark-q4_0-matmult
+	rm -vf *.o main quantize quantize-stats perplexity embedding embeddings-benchmark embeddings-server benchmark-q4_0-matmult
 
 main: examples/main/main.cpp ggml.o llama.o common.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
@@ -167,6 +167,12 @@ perplexity: examples/perplexity/perplexity.cpp ggml.o llama.o common.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 embedding: examples/embedding/embedding.cpp ggml.o llama.o common.o
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+embeddings-benchmark: examples/embeddings-benchmark/embeddings-benchmark.cpp ggml.o llama.o common.o
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+embeddings-server: examples/embeddings-server/embeddings-server.cpp ggml.o llama.o common.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 libllama.so: llama.o ggml.o

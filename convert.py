@@ -147,7 +147,7 @@ class Params:
             n_vocab=n_vocab,
             n_embd=n_embd,
             n_mult=256,
-            n_head=n_embd // 128,
+            n_head=n_embd // 64,
             n_layer=next(i for i in itertools.count() if f"layers.{i}.attention.wq.weight" not in model),
             file_type=file_type,
         )
@@ -1136,6 +1136,7 @@ def main(args_in: Optional[List[str]] = None) -> None:
         output_type = pick_output_type(model, args.outtype)
         model = convert_to_output_type(model, output_type)
         params = Params.guessed(model, output_type)
+        print(params)
         outfile = args.outfile or default_outfile(model_plus.paths, params)
         OutputFile.write_all(outfile, params, model, vocab)
         print(f"Wrote {outfile}")

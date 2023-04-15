@@ -33,6 +33,7 @@ enum e_model {
     MODEL_13B,
     MODEL_30B,
     MODEL_65B,
+    MODEL_LLAMA_LITE,
 };
 
 static const size_t MB = 1024*1024;
@@ -46,6 +47,7 @@ static const std::map<e_model, size_t> MEM_REQ_SCRATCH0 = {
     { MODEL_13B,   512ull*MB },
     { MODEL_30B,   512ull*MB },
     { MODEL_65B,   512ull*MB },
+    { MODEL_LLAMA_LITE,    512ull*MB },
 };
 
 static const std::map<e_model, size_t> MEM_REQ_SCRATCH1 = {
@@ -53,6 +55,7 @@ static const std::map<e_model, size_t> MEM_REQ_SCRATCH1 = {
     { MODEL_13B,   512ull*MB },
     { MODEL_30B,   512ull*MB },
     { MODEL_65B,   512ull*MB },
+    { MODEL_LLAMA_LITE,    512ull*MB },
 };
 
 // 2*n_embd*n_ctx*n_layer*sizeof(float16)
@@ -61,6 +64,7 @@ static const std::map<e_model, size_t> MEM_REQ_KV_SELF = {
     { MODEL_13B,  1608ull*MB },
     { MODEL_30B,  3124ull*MB },
     { MODEL_65B,  5120ull*MB },
+    { MODEL_LLAMA_LITE,    512ull*MB },
 };
 
 // this is mostly needed for temporary mul_mat buffers to dequantize the data
@@ -70,6 +74,7 @@ static const std::map<e_model, size_t> MEM_REQ_EVAL = {
     { MODEL_13B, 1024ull*MB },
     { MODEL_30B, 1280ull*MB },
     { MODEL_65B, 1536ull*MB },
+    { MODEL_LLAMA_LITE,    512ull*MB },
 };
 
 // default hparams (LLaMA 7B)
@@ -828,6 +833,7 @@ static const char *llama_model_type_name(e_model type) {
         case MODEL_13B: return "13B";
         case MODEL_30B: return "30B";
         case MODEL_65B: return "65B";
+        case MODEL_LLAMA_LITE: return "Lite";
         default: LLAMA_ASSERT(false);
     }
 }
@@ -860,6 +866,7 @@ static void llama_model_load_internal(
             case 40: model.type = e_model::MODEL_13B; break;
             case 60: model.type = e_model::MODEL_30B; break;
             case 80: model.type = e_model::MODEL_65B; break;
+            case 12: model.type = e_model::MODEL_LLAMA_LITE; break;
         }
 
         hparams.n_ctx = n_ctx;
