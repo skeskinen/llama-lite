@@ -1,2 +1,5 @@
 numpy==1.24
 sentencepiece==0.1.98
+datasets
+git+https://github.com/huggingface/transformers.git
+huggingface_hub
