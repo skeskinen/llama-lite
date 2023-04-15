@@ -36,6 +36,8 @@ Closest texts:
 Enter a text to find similar texts (enter 'q' to quit): q
 ```
 
+Weights are stored on huggingface: [skeskinen/llama-lite-134m](https://huggingface.co/skeskinen/llama-lite-134m/tree/main)
+
 TODO:
 - Train with more data and better data. Current model is trained only on alpaca dataset which is tiny. Still the basic functionality seems to work (which was surprising to me). The training loss was around 2.7 at the end of training.
 - Make embeddings-benchmark better and more interesting.
