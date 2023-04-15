@@ -31,6 +31,7 @@ def tokenize_function(examples):
     return tokenizer(examples["text"], truncation=True, max_length=2048)
 
 dataset = load_dataset("tatsu-lab/alpaca")
+dataset["train"] = dataset['train'].select(range(100))
 tokenized_dataset = dataset.map(tokenize_function, batched=True, num_proc=4, remove_columns=["text"])
 
 # Set up training arguments
@@ -64,7 +65,3 @@ trainer.train()
 # Save the model and tokenizer to disk
 model.save_pretrained("./output")
 tokenizer.save_pretrained("./output")
-
-# Save the model and tokenizer to the Hugging Face Hub
-model.push_to_hub("skeskinen/llama-lite-134m")
-tokenizer.push_to_hub("skeskinen/llama-lite-134m")
