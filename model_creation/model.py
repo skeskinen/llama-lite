@@ -22,7 +22,7 @@ config = LlamaConfig(
 # Create a new LLaMA model with the custom configuration
 model = LlamaForCausalLM(config=config)
 
-tokenizer = LlamaTokenizer.from_pretrained("aleksickx/llama-7b-hf",
+tokenizer = LlamaTokenizer.from_pretrained("skeskinen/llama-lite-134m",
                                            add_bos_token=True,
                                            add_eos_token=True)
 tokenizer.pad_token_id = (1) # eos, other option is 0 which stands for unk
@@ -31,15 +31,16 @@ def tokenize_function(examples):
     return tokenizer(examples["text"], truncation=True, max_length=2048)
 
 dataset = load_dataset("tatsu-lab/alpaca")
-dataset["train"] = dataset['train'].select(range(100))
-tokenized_dataset = dataset.map(tokenize_function, batched=True, num_proc=4, remove_columns=["text"])
-
+dataset["train"] = dataset["train"].select(range(200))
+tokenized_dataset = dataset.map(tokenize_function, batched=True, num_proc=4,
+            remove_columns=["text", "instruction", "input", "output"])
 # Set up training arguments
 training_args = TrainingArguments(
     output_dir="./tmp-output",
     overwrite_output_dir=True,
-    num_train_epochs=1, 
+    num_train_epochs=1,
     per_device_train_batch_size=4,  # Adjust as needed
+    learning_rate=1e-05,
     warmup_steps=100,
     save_steps=3000,
     save_total_limit=2,
