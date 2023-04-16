@@ -43,3 +43,5 @@ zig-cache/
 
 model_creation/output
 model_creation/tmp-output
+
+error_logs.txt
