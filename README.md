@@ -14,7 +14,7 @@ Interesting parts of this repo:
 3. In examples there are new embeddings binaries, notably embeddings-server which starts a "toy" server that serves embeddings on port 8080.
 
 
-Basic operation, just download the quantized weights
+Basic operation, just download the quantized testing weights
 ```
 make
 pip3 install -r requirements.txt
@@ -41,16 +41,12 @@ Enter a text to find similar texts (enter 'q' to quit): q
 Weights are stored on huggingface: [skeskinen/llama-lite-134m](https://huggingface.co/skeskinen/llama-lite-134m/tree/main)
 
 TODO:
-- Train with more data and better data. Current model is trained only on alpaca dataset which is tiny. Still the basic functionality seems to work (which was surprising to me). The training loss was around 2.7 at the end of training.
-- Make embeddings-benchmark better and more interesting.
-- Validation of some sort?
+- Train a good GPT model with a lot of data and then implement the contrastive pre-training from this [OpenAI text embedding paper](https://cdn.openai.com/papers/Text_and_Code_Embeddings_by_Contrastive_Pre_Training.pdf). 
 - Make the server more robust, safe, etc.
 - Probably a lot of other improvements. This was hacked together quite quickly.
 
 
-Training the precomputed weigths took ~15 mins on rtx 3090.
-In future there will probably be better precomputed weights (contributions are welcome)
-Training on open datasets like Pile or oscar would probably make this more useful, but the current weights are "good enough" for my usecase and serve as a proof of concept.
+Training the current, poor, pre-computed weights took ~15 mins on rtx 3090.
 
 Making your own model:
 ```
@@ -67,4 +63,4 @@ Benchmarks
 examples/mteb-benchmark.py can be used to run mteb embeddings benchmark suite.
 The results are in mteb-results folder. In the result jsons, the final score is the cos_sim.spearman value.
 For reference scores check. https://huggingface.co/spaces/mteb/leaderboard
-This model would be clear last on the leaderboard.
+This model would be clear last on the leaderboard. Even Llama 7B does very poorly, so something like the contrastive training from [the OpenAI paper](https://cdn.openai.com/papers/Text_and_Code_Embeddings_by_Contrastive_Pre_Training.pdf) is probably a necessity for real applications.
