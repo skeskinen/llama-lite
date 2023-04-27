@@ -1,5 +1,7 @@
 # llama-lite
 
+This repo produces poor embeddings. For better embeddings, also in pure C/C++, see https://github.com/skeskinen/bert.cpp
+
 Lightweight version of Llama transformer model intended for generating simple and fast sentence embeddings.
 
 This is an experimental project, and the quality of the embeddings might not be good enough for your application. For better quality embeddings, check [Sentence Transformers](https://sbert.net/). This project might be for you if you want to do inference on CPU and don't like running Python.
